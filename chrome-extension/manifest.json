@@ -6,17 +6,17 @@
   "version": "0.1",
 
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "resources/icon.png",
+    "default_popup": "src/popup.html"
   },
   "background" : {
-    "scripts": ["background.js"],
+    "scripts": ["src/background.js"],
     "persistent": false
   },
   "content_scripts": [
     {
       "matches" : ["<all_urls>"],
-      "js": ["bower_components/jquery/dist/jquery.min.js", "pageLoad.js"]
+      "js": ["bower_components/jquery/dist/jquery.min.js", "src/pageLoad.js"]
     }
   ],
   "web_accessible_resources": [

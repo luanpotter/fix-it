@@ -6,7 +6,7 @@
     "Luan Nico <luanpotter28@hotmail.com>"
   ],
   "description": "Collaborative gallery of small js snippets that fix specific sites behavior.",
-  "main": "pageLoad.js",
+  "main": "src/pageLoad.js",
   "license": "MIT",
   "private": true,
   "dependencies": {
