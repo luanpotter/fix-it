@@ -9,8 +9,16 @@
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
+  "content_scripts": [
+    {
+      "matches" : ["<all_urls>"],
+      "js": ["bower_components/jquery/dist/jquery.min.js", "pageLoad.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "**/*.map"
+  ],
   "permissions": [
-    "activeTab",
-    "https://ajax.googleapis.com/"
+    "activeTab"
   ]
 }

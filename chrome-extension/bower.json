@@ -1,0 +1,15 @@
+{
+  "name": "fix-it",
+  "version": "0.1.0",
+  "homepage": "https://github.com/luanpotter/fix-it",
+  "authors": [
+    "Luan Nico <luanpotter28@hotmail.com>"
+  ],
+  "description": "Collaborative gallery of small js snippets that fix specific sites behavior.",
+  "main": "pageLoad.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.3"
+  }
+}

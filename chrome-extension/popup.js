@@ -12,7 +12,7 @@
 
       callback(url);
     });
-  }
+  };
 
   document.addEventListener('DOMContentLoaded', function() {
     getCurrentTabUrl(function(url) {
