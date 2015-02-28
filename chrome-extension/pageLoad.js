@@ -1,5 +1,7 @@
 (function () {
   $(document).ready(function () {
-    console.log('huehue');
+    chrome.runtime.sendMessage({ method: 'getFix', name: 'loghue' }, function(response) {
+      eval(response.value);
+    });
   });
 }());
