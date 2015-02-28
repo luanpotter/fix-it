@@ -1,4 +1,5 @@
-var FixIt = (function () {
+var FixIt = FixIt || {};
+FixIt.getFix = (function () {
   var getFix = function(name, callback) {
     chrome.storage.local.get(name, function (result) {
       if (result[name]) {
@@ -21,9 +22,7 @@ var FixIt = (function () {
     chrome.storage.local.set(map);
   };
 
-  return {
-    getFix : getFix
-  };
+  return getFix;
 }());
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
