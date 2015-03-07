@@ -1,0 +1,26 @@
+{
+  "name": "FixIt",
+  "version": "0.1.0",
+  "description": "Collaborative gallery of small js snippets that fix specific sites behavior.",
+  "author": "Luan Nico <luannico27@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luanpotter/fix-it"
+  },
+  "bugs": {
+    "url": "https://github.com/luanpotter/fix-it/issues"
+  },
+  "keywords": [
+    "fix-it",
+    "fix",
+    "js",
+    "runner"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-bower-task": "~0.4.0",
+    "grunt-bower-concat": "~0.4.0",
+    "grunt-contrib-clean": "~0.6.0"
+  }
+}

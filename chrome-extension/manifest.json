@@ -10,13 +10,13 @@
     "default_popup": "src/popup.html"
   },
   "background" : {
-    "scripts": ["src/background.js"],
+    "scripts": ["lib/_bower.js", "src/background.js"],
     "persistent": false
   },
   "content_scripts": [
     {
       "matches" : ["<all_urls>"],
-      "js": ["bower_components/jquery/dist/jquery.min.js", "src/pageLoad.js"]
+      "js": ["lib/_bower.js", "src/pageLoad.js"]
     }
   ],
   "web_accessible_resources": [
