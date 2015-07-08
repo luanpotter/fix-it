@@ -1,7 +1,7 @@
-var FixMe = FixMe || {};
+var FixIt = FixIt || {};
 
-FixMe.util = {};
-FixMe.util.currentUrl = function(callback) {
+FixIt.util = {};
+FixIt.util.currentUrl = function(callback) {
   var queryInfo = {
     active: true,
     currentWindow: true
