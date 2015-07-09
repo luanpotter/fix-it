@@ -1,5 +1,4 @@
 var FixIt = FixIt || {};
-
 FixIt.getFix = (function () {
   var getFix = function(name, callback) {
     chrome.storage.local.get(name, function (result) {
@@ -64,7 +63,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         domain : '',
         subdomains: true,
         page: '.*',
-        protocols: []
+        protocols: ['http']
       }, sendMessage);
     };
     FixIt.clearFixes(registerFix);

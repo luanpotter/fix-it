@@ -16,3 +16,9 @@ FixIt.util.currentUrl = function(callback) {
   });
 };
 
+FixIt.util.endsWith = function(str, suffix) {
+  if (suffix === '') {
+    return true;
+  }
+  return str.slice(-suffix.length) === suffix;
+};
