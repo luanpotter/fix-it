@@ -10,7 +10,7 @@
     "default_popup": "src/popup.html"
   },
   "background" : {
-    "scripts": ["lib/_bower.js", "src/background.js"],
+    "scripts": ["lib/_bower.js", "src/Fix.js", "src/background.js"],
     "persistent": false
   },
   "content_scripts": [

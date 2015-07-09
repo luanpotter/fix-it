@@ -26,27 +26,11 @@ FixIt.getFix = (function () {
   return getFix;
 }());
 
-FixIt.Fix = function (args) {
-  this.name = args.name;
-  this.version = args.version;
-
-  this.domain = args.domain; // exact domain string, like google.com
-  this.subdomains = args.subdomains; // allow subdomains of the given domain
-  this.page = new RegExp(args.page, 'i'); // this is a regex for the page (e.g., /asd/etc/.*\.html)
-  this.protocols = args.protocols; // list of valid protocols; if empty, all allowed
-};
-
-FixIt.Fix.prototype.matches = function (url) {
- return true;
-};
-
-var Fix = FixIt.Fix;
-
 FixIt.findRegisteredFixes = function(url, callback) {
   chrome.storage.sync.get('fixes', function (result) {
     var fixes = result.fixes;
     callback(fixes.map(function (obj) {
-      return new Fix(obj);
+      return new FixIt.Fix(obj);
     }).filter(function (fix) {
       return fix.matches(url);
     }));
