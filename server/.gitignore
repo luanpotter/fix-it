@@ -1,0 +1,17 @@
+target
+appengine-generated
+
+src/main/webapp/WEB-INF/appengine-generated/
+src/main/webapp/WEB-INF/classes
+src/main/webapp/WEB-INF/lib
+src/main/webapp/WEB-INF/logging.properties
+src/main/webapp/WEB-INF/datastore-indexes.xml
+
+.project
+.classpath
+.settings
+
+*.class
+*.jar
+*.war
+*.ear
