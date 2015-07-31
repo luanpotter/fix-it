@@ -21,39 +21,6 @@
 		<url-pattern>/api/_tasks/*</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>EndpointFixturesServlet</servlet-name>
-		<servlet-class>io.yawp.servlet.FixturesServlet</servlet-class>
-
-		<init-param>
-			<param-name>packagePrefix</param-name>
-			<param-value>xyz.luan.fixit</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>EndpointFixturesServlet</servlet-name>
-		<url-pattern>/fixtures/*</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DeleteAllServlet</servlet-name>
-		<servlet-class>io.yawp.repository.tools.DeleteAllServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteAllServlet</servlet-name>
-		<url-pattern>/fixtures/delete_all</url-pattern>
-	</servlet-mapping>
-
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>fixit-all</web-resource-name>
-			<url-pattern>/*</url-pattern>
-		</web-resource-collection>
-		<auth-constraint>
-			<role-name>*</role-name>
-		</auth-constraint>
-	</security-constraint>
-
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>fixit-tasks</web-resource-name>
@@ -62,20 +29,5 @@
 		<auth-constraint>
 			<role-name>admin</role-name>
 		</auth-constraint>
-	</security-constraint>
-
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>fixit-fixtures</web-resource-name>
-			<url-pattern>/fixtures/*</url-pattern>
-		</web-resource-collection>
-	</security-constraint>
-
-	<!-- if you want, remove this in production -->
-	<security-constraint>
-		<web-resource-collection>
-			<web-resource-name>fixit-tests</web-resource-name>
-			<url-pattern>/test/*</url-pattern>
-		</web-resource-collection>
 	</security-constraint>
 </web-app>
