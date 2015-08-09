@@ -46,8 +46,16 @@ public class Fix {
 		return name + "#" + version;
 	}
 
+	private boolean nonNull(String value) {
+		return value != null && value.length() > 0;
+	}
+
+	private boolean nonNullFields() {
+		return nonNull(name) && nonNull(version) && nonNull(owner) && nonNull(hashedIdentity) && nonNull(domain);
+	}
+
 	public boolean valid() {
-		return name.matches("[^#]*") && version.matches("[0-9\\.]*") && owner.matches("[0-9]*#[0-9]*");
+		return nonNullFields() && name.matches("[^#]*") && version.matches("[0-9\\.]*") && owner.matches("[0-9]*#[0-9]*");
 	}
 
 	public Key parseOwnerPublicKey() {
