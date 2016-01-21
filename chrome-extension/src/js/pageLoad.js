@@ -4,7 +4,6 @@ var send = chrome.runtime.sendMessage;
 
 $(document).ready(function () {
   var url = document.URL;
-  console.log(url);
   console.log(URI(url).hostname());
 
   send({ method: 'fixtures' }, function (response) {
