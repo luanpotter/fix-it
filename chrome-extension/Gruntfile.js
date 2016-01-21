@@ -1,32 +1,147 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    bower: { install: { } },
-    bower_concat: {
-      all: {
-        dest: 'lib/_bower.js'
-      }
-    },
-    jshint: {
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
-      options: {
-        globals: {
-          jQuery: true,
-          console: true,
-          module: true,
-          document: true
-        },
-        jshintrc : true
-      }
-    },
-    clean: ["lib/", "bower_components/", "dist/", "node_modules/"]
-  });
+	var pkg = grunt.file.readJSON('package.json');
+	var mnf = grunt.file.readJSON('manifest.json');
 
-  grunt.loadNpmTasks('grunt-bower-task');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-bower-concat');
+	var fileMaps = {
+		browserify: {},
+		uglify: {}
+	};
+	var file, files = grunt.file.expand({
+		cwd: 'src/js'
+	}, ['*.js']);
+	for (var i = 0; i < files.length; i++) {
+		file = files[i];
+		fileMaps.browserify['build/unpacked-dev/js/' + file] = 'src/js/' + file;
+		fileMaps.uglify['build/unpacked-prod/js/' + file] = 'build/unpacked-dev/js/' + file;
+	}
 
-  grunt.registerTask('default', ['bower', 'bower_concat', 'jshint']);
+	//
+	// config
+	//
+
+	grunt.initConfig({
+
+		clean: ['build/unpacked-dev', 'build/unpacked-prod', 'build/*.crx'],
+
+		mkdir: {
+			unpacked: {
+				options: {
+					create: ['build/unpacked-dev', 'build/unpacked-prod']
+				}
+			},
+			js: {
+				options: {
+					create: ['build/unpacked-dev/js']
+				}
+			}
+		},
+
+		jshint: {
+			options: grunt.file.readJSON('lint-options.json'), // see http://www.jshint.com/docs/options/
+			all: {
+				src: ['package.json', 'lint-options.json', 'Gruntfile.js', 'src/**/*.js',
+					'src/**/*.json', '!src/js/libs/*'
+				]
+			}
+		},
+
+		mochaTest: {
+			options: {
+				colors: true,
+				reporter: 'spec'
+			},
+			files: ['src/**/*.spec.js']
+		},
+
+		copy: {
+			main: {
+				files: [{
+					expand: true,
+					cwd: 'src/',
+					src: ['**', '!js/**', '!**/*.md'],
+					dest: 'build/unpacked-dev/'
+				}]
+			},
+			prod: {
+				files: [{
+					expand: true,
+					cwd: 'build/unpacked-dev/',
+					src: ['**', '!js/*.js'],
+					dest: 'build/unpacked-prod/'
+				}]
+			}
+		},
+
+		browserify: {
+			build: {
+				files: fileMaps.browserify,
+				options: {
+					browserifyOptions: {
+						debug: true, // for source maps
+						standalone: pkg['export-symbol']
+					}
+				}
+			}
+		},
+
+		exec: {
+			crx: {
+				cmd: [
+					'./scripts/crxmake.sh build/unpacked-prod ./mykey.pem',
+					'mv -v ./unpacked-prod.crx build/' + pkg.name + '-' + pkg.version + '.crx'
+				].join(' && ')
+			}
+		},
+
+		uglify: {
+			min: {
+				files: fileMaps.uglify
+			}
+		},
+
+		watch: {
+			js: {
+				files: ['package.json', 'lint-options.json', 'Gruntfile.js', 'src/**/*.js',
+					'src/**/*.json', '!src/js/libs/*'
+				],
+				tasks: ['test']
+			}
+		}
+
+	});
+
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-mkdir');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-mocha-test');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-browserify');
+	grunt.loadNpmTasks('grunt-exec');
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+
+	//
+	// custom tasks
+	//
+
+	grunt.registerTask(
+		'manifest', 'Extend manifest.json with extra fields from package.json',
+		function () {
+			var fields = ['name', 'version', 'description'];
+			for (var i = 0; i < fields.length; i++) {
+				var field = fields[i];
+				mnf[field] = pkg[field];
+			}
+			grunt.file.write('build/unpacked-dev/manifest.json', JSON.stringify(mnf, null, 4) + '\n');
+			grunt.log.ok('manifest.json generated');
+		}
+	);
+
+	grunt.registerTask('test', ['jshint', 'mochaTest']);
+	grunt.registerTask('test-cont', ['test', 'watch']);
+
+	grunt.registerTask('default', ['clean', 'test', 'mkdir:unpacked', 'copy:main', 'manifest', 'mkdir:js', 'browserify', 'copy:prod']);
+	grunt.registerTask('dist', ['default', 'uglify', 'exec']);
+
 };

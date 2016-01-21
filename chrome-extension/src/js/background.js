@@ -1,5 +1,20 @@
-var FixIt = FixIt || {};
+var Fix = require('./fix');
+
+var FixIt = {};
+
 FixIt.getFix = (function () {
+  var saveFixToCache = function (name, value) {
+    var map = {};
+    map[name] = value;
+    chrome.storage.local.set(map);
+  };
+
+  var fetchFix = function (name, callback) {
+    var value = 'console.log(\'huehue' + Math.random() + '\');';
+    saveFixToCache(name, value);
+    callback(value);
+  };
+
   var getFix = function(name, callback) {
     chrome.storage.local.get(name, function (result) {
       if (result[name]) {
@@ -10,18 +25,6 @@ FixIt.getFix = (function () {
     });
   };
 
-  var fetchFix = function (name, callback) {
-    var value = 'console.log(\'huehue' + Math.random() + '\');';
-    saveFixToCache(name, value);
-    callback(value);
-  };
-
-  var saveFixToCache = function (name, value) {
-    var map = {};
-    map[name] = value;
-    chrome.storage.local.set(map);
-  };
-
   return getFix;
 }());
 
@@ -29,7 +32,7 @@ FixIt.findRegisteredFixes = function(url, callback) {
   chrome.storage.sync.get('fixes', function (result) {
     var fixes = result.fixes;
     callback(fixes.map(function (obj) {
-      return new FixIt.Fix(obj);
+      return new Fix(obj);
     }).filter(function (fix) {
       return fix.matches(url);
     }));
@@ -80,3 +83,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     return true;
   }
 });
+
+module.exports = FixIt;

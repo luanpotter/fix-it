@@ -1,22 +1,18 @@
 {
   "manifest_version": 2,
 
-  "name": "Fix It!",
-  "description": "Collaborative gallery of small js snippets that fix specific sites behavior.",
-  "version": "0.1",
-
   "browser_action": {
-    "default_icon": "resources/icon.png",
-    "default_popup": "src/popup.html"
+    "default_icon": "images/icon.png",
+    "default_popup": "html/popup.html"
   },
   "background" : {
-    "scripts": ["lib/_bower.js", "src/util.js",  "src/Fix.js", "src/Server.js", "src/background.js"],
+    "scripts": ["js/background.js"],
     "persistent": false
   },
   "content_scripts": [
     {
       "matches" : ["<all_urls>"],
-      "js": ["lib/_bower.js", "src/pageLoad.js"]
+      "js": ["js/pageLoad.js"]
     }
   ],
   "web_accessible_resources": [
