@@ -18,11 +18,6 @@ public class FixShield extends Shield<Fix> {
 	}
 
 	@Override
-	public void custom() {
-		allow(true);
-	}
-
-	@Override
 	public void create(List<Fix> fixes) {
 		for (Fix fix : fixes) {
 			create(fix);
