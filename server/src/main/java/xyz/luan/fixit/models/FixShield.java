@@ -30,7 +30,7 @@ public class FixShield extends Shield<Fix> {
 	}
 
 	public void create(Fix fix) {
-		allow(fix.valid() && matchesOwner(fix) && fix.verifyOwnership());
+		allow(fix.valid());// && matchesOwner(fix) && fix.verifyOwnership());
 	}
 
 	private boolean matchesOwner(Fix fix) {
