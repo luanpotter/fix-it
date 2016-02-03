@@ -1,12 +1,28 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Fix It!</title>
-    <script src="../js/popup.js"></script>
-  </head>
-  <body>
-    Current page is: <div id="result"></div>
-    <button id="new">New</button>
-  </body>
-</html>
+	<head>
+		<title>Fix It!</title>
+		<link rel="stylesheet" href="../css/simplex.css">
+		<link rel="stylesheet" href="../css/base.css">
+		<script src="../js/popup.js"></script>
+	</head>
+	<body>
+		<div class="add-fix">
+		  <label class="control-label">New Fix</label>
+		  <div class="input-group">
+			<input type="text" class="form-control">
+			<span class="input-group-btn">
+			  <button class="btn btn-success" type="button">Add</button>
+			</span>
+		  </div>
+		</div>
 
+		<div class="no-fix">
+			  <div class="alert alert-dismissible alert-warning">
+				<h4>Warning!</h4>
+				<p>You still do not have any fix yet. Add a new fix above</a>.</p>
+			  </div>
+			<div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+		</div>
+	</body>
+</html>
