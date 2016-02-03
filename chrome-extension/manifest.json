@@ -1,28 +1,24 @@
 {
-  "manifest_version": 2,
-  "version": "0.0.1",
-  "name": "fix-it",
+    "manifest_version": 2,
 
-  "browser_action": {
-    "default_icon": "src/images/icon.png",
-    "default_popup": "src/html/popup.html"
-  },
-  "background" : {
-    "scripts": ["src/js/background.js"],
-    "persistent": false
-  },
-  "content_scripts": [
-    {
-      "matches" : ["<all_urls>"],
-      "js": ["src/js/pageLoad.js"]
-    }
-  ],
-  "web_accessible_resources": [
-    "**/*.map"
-  ],
-  "permissions": [
-    "activeTab",
-    "storage",
-    "unlimitedStorage"
-  ]
+    "browser_action": {
+        "default_icon": "images/icon.png",
+        "default_popup": "html/popup.html"
+    },
+    "background": {
+        "scripts": ["js/background.js"],
+        "persistent": false
+    },
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["js/pageLoad.js"]
+    }],
+    "web_accessible_resources": [
+        "**/*.map"
+    ],
+    "permissions": [
+        "activeTab",
+        "storage",
+        "unlimitedStorage"
+    ]
 }
