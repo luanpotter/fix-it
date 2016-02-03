@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Fix It!</title>
+    <link rel="stylesheet" href="../css/simplex.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <script src="../js/main.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="fixes col-lg-3">
+            <div class="add-fix">
+                <label class="control-label">New Fix</label>
+                <div class="input-group">
+                    <input type="text" class="form-control">
+                    <span class="input-group-btn">
+        				<button class="btn btn-success" type="button" id="btn-add-fix">Search</button>
+        			</span>
+                </div>
+            </div>
+            <div class="table-fixes hidden" id="table-fix">
+                <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Add Date</th>
+                            <th>Match URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="success">
+                            <td>jquery</td>
+                            <td>26/01/2016</td>
+                            <td>*</td>
+                        </tr>
+                        <tr>
+                            <td>moment</td>
+                            <td>15/11/2015</td>
+                            <td>payments.confidence.com/*</td>
+                        </tr>
+                        <tr>
+                            <td>browserify</td>
+                            <td>10/04/2015</td>
+                            <td>payments.confidence.com/*</td>
+                        </tr>
+                        <tr class="danger">
+                            <td>require</td>
+                            <td>05/05/2015</td>
+                            <td>*</td>
+                        </tr>
+                        <tr class="success">
+                            <td>ga.ferreirasoares@my-js</td>
+                            <td>26/01/2016</td>
+                            <td>*</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+            </div>
+        </div>
+        <div class="fix-editor col-lg-9">
+            <div>
+                <textarea class="form-control" rows="25"></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
