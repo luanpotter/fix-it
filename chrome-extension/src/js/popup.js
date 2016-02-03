@@ -1,27 +1,19 @@
 var jQuery = require('jquery');
-var URI = require('urijs');
-var keypair = require('keypair');
 
-var util = require('./util');
-var Server = require('./server');
+var results = [];
 
 jQuery(function ($) {
-  util.currentUrl(function(url) {
-    var domain = URI(url).hostname();
-    $('#new').on('click', function () {
-      $('#result').text($('#result').text() + keypair().public);
-      if(Math.pow(2, 1)===2) {return;}
-      Server.create({
-        domain : domain
-      }).done(function(person) {
-        console.log('done', person);
-      }).error(function(xhr, ajaxOptions, thrownError) {
-        $('#result').text($('#result').text() + xhr.status);
-        console.log(thrownError);
-      });
-    });
-    Server.find(domain, function (r) {
-      $('#result').text(domain + ':' + r);
-    });
+  if(!results || results.length === 0) {
+    $('#no-fix').removeClass('hidden'); 
+    $('#table-fix').addClass('hidden'); 
+  } else {
+    $('#no-fix').addClass('hidden'); 
+    $('#table-fix').removeClass('hidden'); 
+  }
+
+  $('#btn-add-fix').on('click', function () {
+    chrome.tabs.create({'url': chrome.extension.getURL('html/popup.html')}, function() {
+    // Tab opened.
+  });
   });
 });
