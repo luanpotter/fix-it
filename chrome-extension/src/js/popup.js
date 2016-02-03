@@ -12,8 +12,6 @@ jQuery(function ($) {
   }
 
   $('#btn-add-fix').on('click', function () {
-    chrome.tabs.create({'url': chrome.extension.getURL('html/popup.html')}, function() {
-    // Tab opened.
-  });
+    chrome.tabs.create({'url': chrome.extension.getURL('html/popup.html')});
   });
 });
