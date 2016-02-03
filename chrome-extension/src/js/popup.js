@@ -1,6 +1,6 @@
 var jQuery = require('jquery');
 
-var results = [];
+var results = [{}];
 
 jQuery(function ($) {
   if(!results || results.length === 0) {

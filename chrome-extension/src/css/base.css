@@ -13,6 +13,18 @@ h4 {
     margin-top: 3em;
 }
 
+.fix-editor {
+	padding: 1.5em;
+}
+
 .hidden {
 	visibility: hidden;
+}
+
+.btn.btn-main {
+	margin: 1.5em 0;
+}
+
+.fix-editor {
+	text-align: right;
 }
