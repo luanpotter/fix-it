@@ -7,40 +7,42 @@ import io.yawp.repository.shields.Shield;
 
 public class FixShield extends Shield<Fix> {
 
-	@Override
-	public void index(IdRef<?> parentId) {
-		allow(true);
-	}
+    @Override
+    public void index(IdRef<?> parentId) {
+        allow(true);
+    }
 
-	@Override
-	public void show(IdRef<Fix> id) {
-		allow(true);
-	}
+    @Override
+    public void show(IdRef<Fix> id) {
+        allow(true);
+    }
 
-	@Override
-	public void create(List<Fix> fixes) {
-		for (Fix fix : fixes) {
-			create(fix);
-		}
-	}
+    @Override
+    public void create(List<Fix> fixes) {
+        for (Fix fix : fixes) {
+            create(fix);
+        }
+    }
 
-	public void create(Fix fix) {
-		allow(fix.valid());// && matchesOwner(fix) && fix.verifyOwnership());
-	}
+    public void create(Fix fix) {
+        fix.validate();
+        allow();
+        // matchesOwner(fix) && fix.verifyOwnership());
+    }
 
-	private boolean matchesOwner(Fix fix) {
-		Fix sameName = yawp(Fix.class).where("name", "=", fix.getName()).first();
-		return sameName == null || sameName.getOwner().equals(fix.getOwner());
-	}
+    private boolean matchesOwner(Fix fix) {
+        Fix sameName = yawp(Fix.class).where("name", "=", fix.getName()).first();
+        return sameName == null || sameName.getOwner().equals(fix.getOwner());
+    }
 
-	@Override
-	public void update(IdRef<Fix> id, Fix object) {
-		allow(false);
-	}
+    @Override
+    public void update(IdRef<Fix> id, Fix object) {
+        allow(false);
+    }
 
-	@Override
-	public void destroy(IdRef<Fix> id) {
-		allow(false);
-	}
+    @Override
+    public void destroy(IdRef<Fix> id) {
+        allow(false);
+    }
 
 }
