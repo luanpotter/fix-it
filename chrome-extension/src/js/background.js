@@ -1,4 +1,6 @@
 var Fix = require('./fix');
+var Server = require('./server');
+var URI = require('urijs');
 
 var FixIt = {};
 
@@ -37,6 +39,10 @@ FixIt.findRegisteredFixes = function(url, callback) {
       return fix.matches(url);
     }));
   });
+};
+
+FixIt.findAvailableFixes = function(url, callback) {
+  Server.find(URI(url).domain(), callback);
 };
 
 FixIt.clearFixes = function (callback) {

@@ -8,7 +8,19 @@ yawp.config(function (c) {
 var api = yawp('/fix');
 
 api.find = function (domain, callback) {
-  api.where('domain', '=', domain).list(callback);
+  var acc = 0;
+  var subdomains = domain.split('.').map(function (part) {
+    acc += part.length;
+    return domain.substr(acc++ - part.length, domain.length);
+  });
+
+  var allowSubs = false;
+  subdomains.forEach(function () {
+    console.log(allowSubs);
+    // api.where('domain', '=', domain)
+  });
+
+  callback([{ name : 'for ' + domain, domain : domain  }]);
 };
 
 module.exports = api;
