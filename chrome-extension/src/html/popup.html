@@ -6,6 +6,35 @@
     <link rel="stylesheet" href="../css/simplex.css">
     <link rel="stylesheet" href="../css/base.css">
     <script src="../js/popup.js"></script>
+    <script type="template" id="template-tr">
+        <tr class="success">
+            <td class="name"></td>
+            <td class="date"></td>
+            <td class="domain"></td>
+        </tr>
+    </script>
+    <script type="template" id="template-table">
+      <div class="no-fix">
+          <div class="alert alert-dismissible alert-warning">
+              <h4>Warning!</h4>
+              <p>You still do not have any fix yet. Add a new fix above</a>.</p>
+          </div>
+          <div class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+      </div>
+      <div class="table-fixes">
+          <table class="table table-striped table-hover ">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Add Date</th>
+                      <th>Match URL</th>
+                  </tr>
+              </thead>
+              <tbody></tbody>
+          </table>
+          <div class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
+      </div>
+    </script>
 </head>
 
 <body>
@@ -14,56 +43,16 @@
         <div class="input-group">
             <input type="text" class="form-control">
             <span class="input-group-btn">
-				<button class="btn btn-success" type="button" id="btn-add-fix">Add</button>
-			</span>
+                <button class="btn btn-success" type="button" id="btn-add-fix">Add</button>
+            </span>
         </div>
     </div>
-    <div class="no-fix hidden" id="no-fix">
-        <div class="alert alert-dismissible alert-warning">
-            <h4>Warning!</h4>
-            <p>You still do not have any fix yet. Add a new fix above</a>.</p>
-        </div>
-        <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
-    </div>
-    <div class="table-fixes hidden" id="table-fix">
-        <table class="table table-striped table-hover ">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Add Date</th>
-                    <th>Match URL</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="success">
-                    <td>jquery</td>
-                    <td>26/01/2016</td>
-                    <td>*</td>
-                </tr>
-                <tr>
-                    <td>moment</td>
-                    <td>15/11/2015</td>
-                    <td>payments.confidence.com/*</td>
-                </tr>
-                <tr>
-                    <td>browserify</td>
-                    <td>10/04/2015</td>
-                    <td>payments.confidence.com/*</td>
-                </tr>
-                <tr class="danger">
-                    <td>require</td>
-                    <td>05/05/2015</td>
-                    <td>*</td>
-                </tr>
-                <tr class="success">
-                    <td>my-js</td>
-                    <td>26/01/2016</td>
-                    <td>*</td>
-                </tr>
-            </tbody>
-        </table>
-        <div id="source-button" class="btn btn-primary btn-xs" style="display: none;">&lt; &gt;</div>
-    </div>
+
+    <label class="control-label">My Fixes</label>
+    <div id="my-fixes"></div>
+
+    <label class="control-label">Available Fixes</label>
+    <div id="available-fixes"></div>
 </body>
 
 </html>

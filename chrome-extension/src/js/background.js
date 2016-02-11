@@ -10,7 +10,7 @@ FixIt.getFix = (function () {
   };
 
   var fetchFix = function (name, callback) {
-    var value = 'console.log(\'huehue' + Math.random() + '\');';
+    var value = 'console.log(\'huehue' + Math.random() + '\');'; // TODO here fetch from server
     saveFixToCache(name, value);
     callback(value);
   };
