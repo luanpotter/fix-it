@@ -24,23 +24,33 @@ util.currentUrl(function(url) {
             return tr;
         };
   
-        var myFixes = $(templateTable);
-        myFixesList.forEach(function (result) {
-            myFixes.find('tbody').append(createResult(result));
-        });
-        makeTable(myFixes, myFixesList);
-        $('#my-fixes').append(myFixes);
+        var makePopup = function () {
+          var myFixes = $(templateTable);
+          myFixesList.forEach(function (result) {
+              myFixes.find('tbody').append(createResult(result));
+          });
+          makeTable(myFixes, myFixesList);
+          $('#my-fixes').html('').append(myFixes);
 
-        var availableFixes = $(templateTable);
-        availableFixesList.forEach(function (result) {
-            availableFixes.find('tbody').append(createResult(result));
-        });
-        makeTable(availableFixes, availableFixesList);
-        $('#available-fixes').append(availableFixes);
-  
-        $('#btn-add-fix').on('click', function () {
-          chrome.tabs.create({'url': chrome.extension.getURL('html/main.html?search=' + $('#search').val())});
-        });
+          var availableFixes = $(templateTable);
+          availableFixesList.forEach(function (result) {
+              var tr = createResult(result);
+              tr.on('click', function () {
+                FixIt.registerFix(result, function () {
+                  makePopup();
+                });
+              });
+              availableFixes.find('tbody').append(tr);
+          });
+          makeTable(availableFixes, availableFixesList);
+          $('#available-fixes').html('').append(availableFixes);
+    
+          $('#btn-add-fix').on('click', function () {
+            chrome.tabs.create({'url': chrome.extension.getURL('html/main.html?search=' + $('#search').val())});
+          });
+        };
+
+        makePopup();
       });
     });
   });

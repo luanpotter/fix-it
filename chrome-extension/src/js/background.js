@@ -32,7 +32,7 @@ FixIt.getFix = (function () {
 
 FixIt.findRegisteredFixes = function(url, callback) {
   chrome.storage.sync.get('fixes', function (result) {
-    var fixes = result.fixes;
+    var fixes = result.fixes || [];
     callback(fixes.map(function (obj) {
       return new Fix(obj);
     }).filter(function (fix) {
