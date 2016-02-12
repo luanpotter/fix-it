@@ -42,7 +42,13 @@ FixIt.findRegisteredFixes = function(url, callback) {
 };
 
 FixIt.findAvailableFixes = function(url, callback) {
-  Server.find(URI(url).domain(), callback);
+  Server.find(URI(url).domain(), function (list) {
+    callback(list.map(function (obj) {
+      return new Fix(obj);
+    }).filter(function (fix) {
+      return fix.matches(url);
+    }));
+  });
 };
 
 FixIt.clearFixes = function (callback) {

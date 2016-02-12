@@ -7,8 +7,8 @@ var Fix = function (args) {
 
   this.domain = args.domain; // exact domain string, like google.com
   this.subdomains = args.subdomains; // allow subdomains of the given domain
-  this.page = new RegExp(args.page, 'i'); // this is a regex for the page (e.g., /asd/etc/.*\.html)
-  this.protocols = args.protocols; // list of valid protocols; if empty, all allowed
+  this.page = new RegExp(args.page || '.*', 'i'); // this is a regex for the page (e.g., /asd/etc/.*\.html)
+  this.protocols = args.protocols || []; // list of valid protocols; if empty, all allowed
 };
 
 var api = Fix.prototype;
