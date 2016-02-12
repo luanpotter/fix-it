@@ -35,7 +35,9 @@ api.find = function (domain, callback) {
   });
 
   Q.all(promises).then(function (results) {
-    callback(_.flatten(results));
+    callback(_.uniqWith(_.flatten(results), function (o1, o2) {
+      return _.isEqual(o1.name, o2.name);
+    }));
   });
 };
 
