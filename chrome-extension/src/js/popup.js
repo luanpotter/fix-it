@@ -36,7 +36,7 @@ util.currentUrl(function(url) {
         $('#available-fixes').html(JSON.stringify(availableFixesList));
   
         $('#btn-add-fix').on('click', function () {
-          chrome.tabs.create({'url': chrome.extension.getURL('html/main.html')});
+          chrome.tabs.create({'url': chrome.extension.getURL('html/main.html?search=' + $('#search').val())});
         });
       });
     });
