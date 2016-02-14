@@ -41,6 +41,12 @@ util.currentUrl(function (url) {
           $('#my-fixes').html('').append(myFixes);
 
           var availableFixes = $(templateTable);
+          var myFixesNames = myFixesList.map(function (fix) {
+            return fix.name;
+          });
+          availableFixesList = availableFixesList.filter(function (fix) {
+            return myFixesNames.indexOf(fix.name) === -1;
+          });
           availableFixesList.forEach(function (result) {
             var tr = createResult(result);
             tr.on('click', function () {
