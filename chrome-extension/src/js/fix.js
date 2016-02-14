@@ -1,5 +1,5 @@
 var URI = require('urijs');
-var util = require('./util');
+var _ = require('lodash');
 
 var Fix = function (args) {
   this.name = args.name;
@@ -7,7 +7,7 @@ var Fix = function (args) {
 
   this.domain = args.domain; // exact domain string, like google.com
   this.subdomains = args.subdomains; // allow subdomains of the given domain
-  this.page = new RegExp(args.page || '.*', 'i'); // this is a regex for the page (e.g., /asd/etc/.*\.html)
+  this.page = args.page; // this is a regex for the page (e.g., /asd/etc/.*\.html)
   this.protocols = args.protocols || []; // list of valid protocols; if empty, all allowed
 };
 
@@ -22,11 +22,12 @@ api.matches = function (urlString) {
 
   var matchesDomain = function (url) {
     var urlDomain = url.hostname();
-    return self.subdomains ? util.endsWith(urlDomain, self.domain) : urlDomain === self.domain;
+    return self.subdomains ? _.endsWith(urlDomain, self.domain) : urlDomain === self.domain;
   };
 
   var matchesPage = function (url) {
-    return self.page.test(url.path());
+    var regex = new RegExp(self.page || '.*', 'i');
+    return regex.test(url.path());
   };
 
   var url = URI(urlString);

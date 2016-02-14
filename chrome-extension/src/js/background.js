@@ -17,7 +17,7 @@ FixIt.getFix = (function () {
     callback(value);
   };
 
-  var getFix = function(name, callback) {
+  var getFix = function (name, callback) {
     chrome.storage.local.get(name, function (result) {
       if (result[name]) {
         callback(result[name]);
@@ -30,18 +30,20 @@ FixIt.getFix = (function () {
   return getFix;
 }());
 
-FixIt.findRegisteredFixes = function(url, callback) {
+FixIt.findRegisteredFixes = function (url, callback) {
   chrome.storage.sync.get('fixes', function (result) {
     var fixes = result.fixes || [];
+    console.log('found ', fixes);
     callback(fixes.map(function (obj) {
       return new Fix(obj);
     }).filter(function (fix) {
+      console.log('fix ', fix, fix.matches(url));
       return fix.matches(url);
     }));
   });
 };
 
-FixIt.findAvailableFixes = function(url, callback) {
+FixIt.findAvailableFixes = function (url, callback) {
   Server.find(URI(url).domain(), function (list) {
     callback(list.map(function (obj) {
       return new Fix(obj);
@@ -52,10 +54,24 @@ FixIt.findAvailableFixes = function(url, callback) {
 };
 
 FixIt.clearFixes = function (callback) {
-  chrome.storage.sync.set({ fixes : [] }, callback);
+  chrome.storage.sync.set({
+    fixes: []
+  }, callback);
 };
 
-FixIt.registerFix = function(fix, callback) {
+FixIt.removeFix = function (fix, callback) {
+  chrome.storage.sync.get('fixes', function (result) {
+    if (!result.fixes) {
+      result.fixes = [];
+    }
+    result.fixes = result.fixes.filter(function (fo) {
+      return fo.name !== fix.name;
+    });
+    chrome.storage.sync.set(result, callback);
+  });
+};
+
+FixIt.registerFix = function (fix, callback) {
   chrome.storage.sync.get('fixes', function (result) {
     if (!result.fixes) {
       result.fixes = [];
@@ -65,17 +81,19 @@ FixIt.registerFix = function(fix, callback) {
   });
 };
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.method === "fixtures") {
     var sendMessage = function () {
-      sendResponse({ status : 'done' });
+      sendResponse({
+        status: 'done'
+      });
     };
     var registerFix = function () {
       FixIt.registerFix({
         name: 'Hue Logger',
         version: '0.0.1',
 
-        domain : '',
+        domain: '',
         subdomains: true,
         page: '.*',
         protocols: ['http']
@@ -85,12 +103,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     return true;
   } else if (request.method === "findFixes") {
     FixIt.findRegisteredFixes(request.url, function (results) {
-      sendResponse({ fixes : results });
+      sendResponse({
+        fixes: results
+      });
     });
     return true;
   } else if (request.method === "getFix") {
     FixIt.getFix(request.name, function (result) {
-      sendResponse({ fix : result });
+      sendResponse({
+        fix: result
+      });
     });
     return true;
   }
