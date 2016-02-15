@@ -9,11 +9,7 @@ var get = function () {
   };
 
   chrome.tabs.query(queryInfo, function (tabs) {
-    var tab = tabs[0];
-    var url = tab.url;
-    console.assert(typeof url === 'string', 'tab.url should be a string');
-
-    deferred.resolve(url);
+    deferred.resolve(tabs[0].url);
   });
 
   return deferred.promise;
