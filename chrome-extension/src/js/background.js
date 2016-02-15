@@ -1,6 +1,7 @@
 var Fix = require('./fix');
 var Server = require('./server');
 var URI = require('urijs');
+var Q = require('q');
 
 var FixIt = {};
 
@@ -30,27 +31,42 @@ FixIt.getFix = (function () {
   return getFix;
 }());
 
-FixIt.findRegisteredFixes = function (url, callback) {
-  chrome.storage.sync.get('fixes', function (result) {
-    var fixes = result.fixes || [];
-    console.log('found ', fixes);
-    callback(fixes.map(function (obj) {
-      return new Fix(obj);
-    }).filter(function (fix) {
-      console.log('fix ', fix, fix.matches(url));
-      return fix.matches(url);
-    }));
+FixIt.findAllFixes = function (url) {
+  var deferred = Q.defer();
+  var my = FixIt.findRegisteredFixes(url);
+  var av = FixIt.findAvailableFixes(url);
+  Q.all([my, av]).then(function (r) {
+    deferred.resolve({
+        mine : r[0],
+        available : r[1]
+    });
   });
+  return deferred.promise;
 };
 
-FixIt.findAvailableFixes = function (url, callback) {
-  Server.find(URI(url).domain(), function (list) {
-    callback(list.map(function (obj) {
+FixIt.findRegisteredFixes = function (url) {
+  var deferred = Q.defer();
+  chrome.storage.sync.get('fixes', function (result) {
+    var fixes = result.fixes || [];
+    deferred.resolve(fixes.map(function (obj) {
       return new Fix(obj);
     }).filter(function (fix) {
       return fix.matches(url);
     }));
   });
+  return deferred.promise;
+};
+
+FixIt.findAvailableFixes = function (url) {
+  var deferred = Q.defer();
+  Server.find(URI(url).domain(), function (list) {
+    deferred.resolve(list.map(function (obj) {
+      return new Fix(obj);
+    }).filter(function (fix) {
+      return fix.matches(url);
+    }));
+  });
+  return deferred.promise;
 };
 
 FixIt.clearFixes = function (callback) {

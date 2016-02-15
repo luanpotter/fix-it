@@ -1,6 +1,8 @@
-var util = {};
+var Q = require('q');
 
-util.currentUrl = function (callback) {
+var get = function () {
+  var deferred = Q.defer();
+
   var queryInfo = {
     active: true,
     currentWindow: true
@@ -11,8 +13,10 @@ util.currentUrl = function (callback) {
     var url = tab.url;
     console.assert(typeof url === 'string', 'tab.url should be a string');
 
-    callback(url);
+    deferred.resolve(url);
   });
+
+  return deferred.promise;
 };
 
-module.exports = util;
+module.exports = { get : get };
