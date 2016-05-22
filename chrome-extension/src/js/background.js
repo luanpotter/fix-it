@@ -13,9 +13,11 @@ FixIt.getFix = (function () {
   };
 
   var fetchFix = function (name, callback) {
-    var value = 'console.log(\'huehue' + Math.random() + '\');'; // TODO here fetch from server
-    saveFixToCache(name, value);
-    callback(value);
+    Server.where('name', '=', name).list(function (fixes) {
+      var value = fixes[0].code;
+      saveFixToCache(name, value);
+      callback(value);
+    });
   };
 
   var getFix = function (name, callback) {
@@ -118,7 +120,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     FixIt.clearFixes(registerFix);
     return true;
   } else if (request.method === "findFixes") {
-    FixIt.findRegisteredFixes(request.url, function (results) {
+    FixIt.findRegisteredFixes(request.url).done(function (results) {
       sendResponse({
         fixes: results
       });

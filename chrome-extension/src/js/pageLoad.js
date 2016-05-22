@@ -1,16 +1,17 @@
 var $ = require('jquery');
 var send = chrome.runtime.sendMessage;
 
-$(document).ready(function () {
+$(function () {
   var url = document.URL;
+
+  console.log('howdy');
 
   send({
     method: 'findFixes',
     url: url
   }, function (fixesResponse) {
     console.log('Loading ' + fixesResponse.fixes.length + ' fixes');
-    $.each(fixesResponse.fixes, function (_i, fixData) {
-      console.log('fix', fixData);
+    fixesResponse.fixes.forEach(function (fixData) {
       send({
         method: 'getFix',
         name: fixData.name
