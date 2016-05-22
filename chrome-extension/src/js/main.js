@@ -4,11 +4,11 @@ var results = [{}];
 
 jQuery(function ($) {
   if(!results || results.length === 0) {
-    $('#no-fix').removeClass('hidden'); 
-    $('#table-fix').addClass('hidden'); 
+    $('#no-fix').removeClass('hidden');
+    $('#table-fix').addClass('hidden');
   } else {
-    $('#no-fix').addClass('hidden'); 
-    $('#table-fix').removeClass('hidden'); 
+    $('#no-fix').addClass('hidden');
+    $('#table-fix').removeClass('hidden');
   }
 
   $("#search").val(window.location.search.split("=")[1]);

@@ -32,3 +32,15 @@ h4 {
 .table {
 	margin-top: 3em;
 }
+
+.form-control {
+	width: 600px;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
