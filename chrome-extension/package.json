@@ -34,7 +34,7 @@
     "grunt": "grunt"
   },
   "dependencies": {
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "keypair": "^1.0.0",
     "lodash": "^4.3.0",
     "q": "^1.4.1",
