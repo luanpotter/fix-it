@@ -36,7 +36,7 @@
   "dependencies": {
     "jquery": "^3.5.0",
     "keypair": "^1.0.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "q": "^1.4.1",
     "urijs": "^1.19.6",
     "yawp-cli": "^1.0.1"
