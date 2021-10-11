@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "jquery": "^3.5.0",
-    "keypair": "^1.0.0",
+    "keypair": "^1.0.4",
     "lodash": "^4.17.21",
     "q": "^1.4.1",
     "urijs": "^1.19.6",
